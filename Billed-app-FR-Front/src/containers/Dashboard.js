@@ -32,7 +32,7 @@ export const card = (bill) => {
   const firstName = firstAndLastNames.includes('.') ?
     firstAndLastNames.split('.')[0] : ''
   const lastName = firstAndLastNames.includes('.') ?
-  firstAndLastNames.split('.')[1] : firstAndLastNames
+    firstAndLastNames.split('.')[1] : firstAndLastNames
 
   return (`
     <div class='bill-card' id='open-bill${bill.id}' data-testid='open-bill${bill.id}'>
@@ -146,7 +146,7 @@ export default class {
     }
 
     bills.forEach(bill => {
-      $(`#open-bill${bill.id}`).click((e) => this.handleEditTicket(e, bill, bills))
+      $(`#status-bills-container${this.index} #open-bill${bill.id}`).click(e => this.handleEditTicket(e, bill, bills))
     })
 
     return bills
@@ -156,21 +156,21 @@ export default class {
   getBillsAllUsers = () => {
     if (this.store) {
       return this.store
-      .bills()
-      .list()
-      .then(snapshot => {
-        const bills = snapshot
-        .map(doc => ({
-          id: doc.id,
-          ...doc,
-          date: doc.date,
-          status: doc.status
-        }))
-        return bills
-      })
-      .catch(error => {
-        throw error;
-      })
+        .bills()
+        .list()
+        .then(snapshot => {
+          const bills = snapshot
+            .map(doc => ({
+              id: doc.id,
+              ...doc,
+              date: doc.date,
+              status: doc.status
+            }))
+          return bills
+        })
+        .catch(error => {
+          throw error;
+        })
     }
   }
 
@@ -178,11 +178,11 @@ export default class {
   /* istanbul ignore next */
   updateBill = (bill) => {
     if (this.store) {
-    return this.store
-      .bills()
-      .update({data: JSON.stringify(bill), selector: bill.id})
-      .then(bill => bill)
-      .catch(console.log)
+      return this.store
+        .bills()
+        .update({data: JSON.stringify(bill), selector: bill.id})
+        .then(bill => bill)
+        .catch(console.log)
     }
   }
 }
